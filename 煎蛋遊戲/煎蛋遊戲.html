@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./animate.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url(./底圖.svg) no-repeat center/cover;
+    }
+
+    .cook {
+      width: 1300px;
+      height: 100vh;
+      position: relative;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    .bg {
+      background: url(./平底鍋.svg) no-repeat;
+      background-size: 1100px;
+      background-position-x: -4px;
+      background-position-y: 20px;
+      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.8));
+      width: 1300px;
+      height: 100vh;
+      position: relative;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    .hole {
+      width: 120px;
+      height: 120px;
+    }
+
+    table {
+      border-spacing: 0;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 360px;
+      left: 645px;
+    }
+
+    .eggfirst {
+      background-image: url(./egg-first.svg);
+      background-size: 120%;
+      background-repeat: no-repeat;
+      background-position: -6px;
+    }
+
+    .red {
+      background-image: url(./egg.svg);
+      background-size: 120%;
+      background-repeat: no-repeat;
+      background-position: -6px;
+    }
+
+    .blue {
+      background-image: none;
+      background-repeat: no-repeat;
+    }
+
+    #start {
+      width: 150px;
+      height: 45px;
+      top: 720px;
+      left: 568px;
+      position: absolute;
+      margin: auto;
+      border-radius: 50px;
+      font-size: 24px;
+      font-family: '微軟正黑體';
+      font-weight: bold;
+      color: white;
+      background: rgb(247, 60, 60);
+      border: 0;
+      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.8));
+      cursor: pointer;
+    }
+
+    .startAn {
+      animation: startAn 1s infinite linear running;
+    }
+
+    @keyframes startAn {
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .Text {
+      width: 280px;
+      height: 350px;
+      border: 1px solid gray;
+      position: absolute;
+      padding: 30px;
+      top: 100px;
+      left: -60px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 45px;
+      line-height: 40px;
+    }
+
+    h2 {
+      font-size: 32px;
+      line-height: 20px;
+    }
+
+    h5 {
+      color: gray;
+    }
+
+    h3 {
+      color: rgb(231, 55, 55);
+    }
+
+    #score {
+      font-size: 72px;
+    }
+
+    #game {
+      /* cursor: url(檔案路徑) 滑鼠 X 座標 滑鼠 Y 座標，auto */
+      cursor: url(./ggg.png) 50 50, auto;
+    }
+
+    #showT {
+      width: 300px;
+      text-align: center;
+      font-family: '微軟正黑體';
+      border-spacing: 0;
+      color: rgb(255, 196, 4);
+      line-height: 25px;
+      top: 250px;
+      left: 500px;
+    }
+
+    #showT img {
+      margin-bottom: -15px;
+    }
+
+    #showT .std {
+      padding-top: 0px;
+      font-size: 20px;
+      font-weight: bold;
+      padding-bottom: 15px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cook">
+    <div class="bg object-fit"></div>
+    <table id="game">
+      <tr>
+        <td class="hole" id="hole7"></td>
+        <td class="hole" id="hole8"></td>
+        <td class="hole" id="hole9"></td>
+      </tr>
+      <tr>
+        <td class="hole" id="hole4"></td>
+        <td class="hole" id="hole5"></td>
+        <td class="hole" id="hole6"></td>
+      </tr>
+      <tr>
+        <td class="hole" id="hole1"></td>
+        <td class="hole" id="hole2"></td>
+        <td class="hole" id="hole3"></td>
+      </tr>
+    </table>
+    <table id="showT" class="animate__animated  animate__flipInY animate__slow">
+      <tr>
+        <td><img src="./egg-first.svg" alt=""></td>
+        <td><img src="./egg.svg" alt=""></td>
+      </tr>
+      <tr>
+        <td class="std">沒熟荷包蛋</td>
+        <td class="std">美味荷包蛋</td>
+      </tr>
+      <tr>
+        <td colspan="2">請在時間內點擊鏟起美味的荷包蛋，
+          <br>一起成為煎蛋高手吧！
+        </td>
+      </tr>
+    </table>
+    <div class="Text">
+      <h1>目前分數</h1>
+      <h1><span id="score">0</span></h1>
+      <h5>////////////////////////////////////////////////////////////////////////////</h5>
+      <h3>🏆 煎蛋高手 4 泥 </h3>
+      <h2><span id="highname">???</span></h2>
+      <h2>成績：<span id="highscore">0</span></h2>
+    </div>
+    <input type="button" value="START" id="start" class="startAn">
+  </div>
+
+
+  <script>
+    const holes = document.getElementsByClassName('hole')
+    const start = document.getElementById('start')
+    const scoreText = document.getElementById('score')
+    const highnameText = document.getElementById('highname')
+    const highscoreText = document.getElementById('highscore')
+    const showT = document.getElementById('showT')
+
+    // 最高分
+    const high = { score: 0, name: '???' }
+    // 計分
+    let score = 0
+    // 計時器
+    let timer = 0
+    // 音效
+    const audio = new Audio()
+
+    // 讀取資料
+    const storage = JSON.parse(localStorage.getItem('EggCooking'))
+    // 如果有資料
+    if (storage) {
+      high.name = storage.name
+      high.score = storage.score
+      // 修改最高分顯示文字
+      highnameText.innerText = high.name
+      highscoreText.innerText = high.score
+    }
+
+    start.onclick = () => {
+      start.disabled = true
+      showT.style.display = 'none'
+      start.style.display = 'none'
+      for (const hole of holes) {
+        hole.classList.add('eggfirst')
+      }
+      // 重設分數
+      score = 0
+      scoreText.innerText = score
+      // 每秒變換一次
+      timer = setInterval(game, 1000)
+      game()
+      // 十秒後遊戲結束
+      setTimeout(end, 10 * 1000)
+    }
+
+    // 每秒變換顏色
+    const game = () => {
+      // 移除顏色
+      for (const hole of holes) {
+        hole.classList.remove('red')
+        hole.classList.remove('blue')
+      }
+      // // 隨機抽三個變換成紅色，可重複
+      // for (let i = 0; i < 3; i++) {
+      //   holes[Math.round(Math.random() * (holes.length - 1))].classList.add('red')
+      // }
+      // 隨機抽三個變換成紅色，不重複
+      for (let i = 0; i < 3; i++) {
+        let randNum = Math.round(Math.random() * (holes.length - 1))
+        if (holes[randNum].classList.contains('red')) {
+          i--;
+        } else {
+          holes[randNum].classList.add('red');
+        }
+      }
+    }
+    // 遊戲結束
+    const end = () => {
+      // 停止變換顏色
+      clearInterval(timer)
+      start.style.display = 'block'
+      for (const hole of holes) {
+        hole.classList.remove('red')
+        hole.classList.remove('blue')
+        hole.classList.remove('eggfirst')
+      }
+      // 啟用開始按鈕
+      start.disabled = false
+      // 跳出訊息
+      alert(`遊戲結束，你得到 ${score} 分`)
+      // 紀錄最高分
+      if (score > high.score) {
+        audio.src = './遊戲素材/rihai.mp3'
+        audio.play()
+        // 請玩家輸入名字
+        const input = prompt('最高分，請輸入名字')
+        // 修改最高分變數資料
+        high.score = score
+        high.name = input || '???'
+        // 修改最高分顯示文字
+        highnameText.innerText = high.name
+        highscoreText.innerText = high.score
+        // 保存
+        // localStorage.setItem(資料名,文字)
+        // 變數轉文字：JSON.stringify(變數)
+        localStorage.setItem('EggCooking', JSON.stringify(high))
+      }
+    }
+
+    // 點擊變色
+    for (const hole of holes) {
+      hole.onclick = () => {
+        if (hole.classList.contains('red')) {
+          // 變為藍色
+          hole.classList.replace('red', 'blue')
+          // 加分
+          score++
+          scoreText.innerText = score
+        }
+      }
+    }
+
+    // 數字鍵
+    document.onkeydown = event => {
+      // 按了什麼鑑
+      const key = event.key
+      // 如果是數字鍵
+      if (!isNaN(key)) {
+        // 找到對應的格子
+        const target = document.getElementById(`hole${key}`)
+        // 如果有找到
+        if (target && target.classList.contains('red')) {
+          // 變為藍色
+          target.classList.replace('red', 'blue')
+          // 加分
+          score++
+          scoreText.innerText = score
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
